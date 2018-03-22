@@ -1,0 +1,187 @@
+﻿@using GeniusBase.Dal.Entities
+@{
+    KbUser CurrentUserInfo = HelperFunctions.UserAsKbUser(Context.User);
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - GeniusBase</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width" />
+    
+    @*if (Request.Browser.Browser.Contains("InternetExplorer"))
+     {
+        <meta http-equiv="x-ua-compatible" content="IE=11" />
+     } *@
+        
+    @{ Html.RenderPartial("GoogleFonts"); }     
+    @Styles.Render("~/admin/css")       
+</head>
+ <body class="skin-blue">
+     
+    <header class="header">
+        <a href='@Url.Action("Index", "Dashboard")' class="logo">        
+            <img src='@Url.Content("~/Assets/img/vault.png")' width="48" /> GeniusBase
+        </a>
+        <nav class="navbar navbar-static-top" role="navigation">
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+
+                    <li class="dropdown user user-menu">
+                        <a href='#' class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="@CurrentUserInfo.GravatarImageUrl" width="16" />                            
+                            <span>@CurrentUserInfo.Name @CurrentUserInfo.LastName<i class="caret"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header bg-light-blue">
+                                <img src="@CurrentUserInfo.GravatarImageUrl" class="img-circle"/>
+                                <p>@CurrentUserInfo.Name @CurrentUserInfo.LastName</p>
+                            </li>                           
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="@Url.Action("MyProfile", "Account")" class="btn btn-default btn-flat">Profile</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href='@Url.Action("Logout", "Account")' class="btn btn-default btn-flat">Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        <aside class="left-side sidebar-offcanvas">
+            <section class="sidebar"> 
+                <ul class="sidebar-menu">
+                    @if (HelperFunctions.IsAdmin(Context.User) || HelperFunctions.IsManager(Context.User))
+                    {
+                    <li>
+                        <div>
+                            <a href='@Url.Action("Index", "Settings")'>
+                                <i class="fa fa-gear"></i> <span>@UIResources.LeftSideBarSettings</span>
+                            </a>
+                        </div>
+                    </li>
+                    }
+                    <li>
+                        <div>
+                            <a href='@Url.Action("Create", "Article")'>
+                                <i class="fa fa-pencil"></i> <span>@UIResources.LeftSidebarCreateArticle</span>
+                            </a>
+                        </div>
+                    </li>
+                    @if (HelperFunctions.IsAdmin(Context.User) || HelperFunctions.IsManager(Context.User))
+                    {
+                    <li>     
+                        <div>
+                            <a href='@Url.Action("Create", "Category")'>
+                                <i class="fa fa-plus"></i> <span>@UIResources.LeftSidebarCreateCategory</span>
+                            </a>
+                        </div>                       
+                    </li>
+                    }
+                    <li class="treeview active">                                                
+                        <div>
+                            <a href="#" class="trigger-item">
+                                <i class="fa fa-folder"></i>
+                                <span>@UIResources.LeftSidebarCategoryListTitle</span>                                                                                                                                     
+                            </a>                                
+                       </div>      
+                        
+                        @HelperFunctions.CreateCategoryMenu()
+                        
+                    </li>
+                    @if (HelperFunctions.IsAdmin(Context.User))
+                    {
+                    <li>
+                        <div>
+                            <a href='@Url.Action("Users", "Account")'>
+                                <i class="fa fa-user"></i>
+                                @UIResources.LeftSidebarUserMenuTitle
+                            </a>
+                        </div>
+                    </li>
+                    }
+                    @if (HelperFunctions.IsAdmin(Context.User) || HelperFunctions.IsManager(Context.User))
+                    {
+                    <li>
+                        <div>
+                            <a href='@Url.Action("List", "Tag")'>
+                                <i class="fa fa-tag"></i>
+                                @UIResources.LeftSideBarTagsTitle
+                            </a>
+                        </div>
+                    </li>
+                    }
+                    @if (HelperFunctions.IsAdmin(Context.User))
+                    {
+                    <li>
+                        <div>
+                            <a href='@Url.Action("Index", "Activity")'>
+                                <i class="fa fa-desktop"></i>
+                                @UIResources.LeftSideBarActivitiesTitle
+                            </a>
+                        </div>
+                    </li>
+                        <li>
+                            <div>
+                                <a href="@Url.Action("Index","Backup")">
+                                    <i class="fa fa-briefcase"></i>
+                                    @UIResources.LeftSideBarBackupTitle
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <a href="@Url.Action("Index","Indexing")">
+                                    <i class="fa fa-book"></i>
+                                    @UIResources.IndexingLeftMenuTitle
+                                </a>
+                            </div>
+                        </li>
+                    }
+                    
+                </ul>
+            </section>
+        </aside>
+        <aside class="right-side">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                @RenderSection("ContentHeader", required: false)                
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                @if (ViewBag.ShowOperationMessage != null && ViewBag.ShowOperationMessage)
+                {
+                    <div class="alert alert-success alert-dismissable">
+                        <i class="fa fa-check"></i>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        @ViewBag.OperationMessage
+                    </div>
+                }
+                 @if (ViewBag.ShowErrorMessage != null && ViewBag.ShowErrorMessage)
+                 {
+                    <div class="alert alert-danger alert-dismissable">
+                        <i class="fa fa-check"></i>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        @ViewBag.ErrorMessage
+                    </div>
+                 }
+                @RenderBody()
+            </section>
+        </aside>
+    </div>
+    
+    @Scripts.Render("~/admin/js")     
+     <script src="~/signalr/hubs"></script>
+    <script>
+            $(document).ready(function () {                
+                @RenderSection("Scripts", required: false)
+            });
+        </script>
+</body>
+</html>

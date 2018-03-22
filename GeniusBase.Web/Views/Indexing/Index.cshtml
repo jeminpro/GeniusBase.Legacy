@@ -1,0 +1,79 @@
+﻿@model GeniusBase.Web.Models.CategoryViewModel
+
+@{
+    ViewBag.Title = UIResources.IndexingRebuildPageTitle;
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+@section Scripts{
+      $(function () {
+            var indexer = $.connection.indexerHub;
+            
+            indexer.client.updateProgress = function (currentCategoryIdx, totalCategoryCount, categoryName, articleName) {                                        
+                if(currentCategoryIdx===totalCategoryCount){
+                    $('#ArticleName').text("");
+                    $('#CategoryProgress').text("");
+                    $("#indexingProgress").attr("value",100);
+                    $('#StartIndexing').prop('disabled', false);
+                }else{
+                    $("#indexingProgress").attr("value",Math.round(currentCategoryIdx*100/totalCategoryCount));
+                    $('#CategoryProgress').text(categoryName);
+                    if(articleName.length > 0){
+                        $('#ArticleName').text(" - "+articleName);
+                    }
+                }
+                
+            };
+
+            $.connection.hub.start().done(function () {
+                $('#StartIndexing').click(function () {                    
+                    $('#StartIndexing').prop('disabled', true);
+                    indexer.server.rebuildIndexes();
+                });
+            });
+        });
+}
+@section ContentHeader{
+    <h1>
+        @UIResources.IndexingRebuildIndexTitle        
+    </h1>   
+}
+
+<div class="row">        
+<div class="col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading"></div>
+        <div class="panel-body">
+            <div class="col-md-12">
+                <b id="CategoryProgress"></b><span id="ArticleName"></span>
+            </div>
+            <div class="col-md-12">
+                <progress id="indexingProgress" value="0" max="100" class="bar-full-width"></progress>
+            </div>
+            <div class="col-md-12">            
+                <button class="pull-right" id="StartIndexing">@UIResources.IndexingRebuildButtonText</button>
+            </div>
+            
+        </div>
+    </div>
+</div>
+    </div>
+@*
+<script>
+        $(function () {            
+            var indexer = $.connection.indexerHub;
+            indexer.client.updateProgress = function (currentCategoryIdx, totalCategoryCount, categoryname, articleName) {                
+                $('#CategoryProgress').text(currentCategoryIdx + "/" + totalCategoryCount + " : " + categoryName);
+                $('#ArticleName').text("Article: " + articleName);
+            };
+            
+            $.connection.hub.start().done(function () {
+                $('#StartIndexing').click(function () {
+                    // Call the Send method on the hub.
+                    indexer.server.rebuildIndexes();                                        
+                });
+            });
+        });
+        
+</script>
+*@

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeniusBase.Web", "GeniusBase.Web\GeniusBase.Web.csproj", "{71944D1B-15A8-4942-A85E-4FDD756FF20E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeniusBase.Core", "GeniusBase.Core\GeniusBase.Core.csproj", "{9A05B0A7-0B0D-451D-BFB1-58417F14FC2C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{71944D1B-15A8-4942-A85E-4FDD756FF20E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71944D1B-15A8-4942-A85E-4FDD756FF20E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71944D1B-15A8-4942-A85E-4FDD756FF20E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71944D1B-15A8-4942-A85E-4FDD756FF20E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A05B0A7-0B0D-451D-BFB1-58417F14FC2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A05B0A7-0B0D-451D-BFB1-58417F14FC2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A05B0A7-0B0D-451D-BFB1-58417F14FC2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A05B0A7-0B0D-451D-BFB1-58417F14FC2C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(CodealikeProperties) = postSolution
+		SolutionGuid = 3f04992c-50f7-4b54-bd28-9eb23e5c0f1f
+	EndGlobalSection
+EndGlobal

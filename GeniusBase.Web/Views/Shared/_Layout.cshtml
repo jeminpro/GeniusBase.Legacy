@@ -1,0 +1,98 @@
+﻿@{
+    var searchTerm = "";
+    if (ViewBag.SearchTerm != null)
+    {
+        searchTerm = ViewBag.SearchTerm;
+    }
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/bundles/css/lib")
+    @Scripts.Render("~/bundles/js/lib")
+    @RenderSection("CssHeader", required: false)
+    <script type="text/javascript">
+        var KB_SearchUrl = "@Url.Action("Ajax","Search")";
+    </script>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" width="40" height="40" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="container-fluid pt-2">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-8">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend d-none d-md-block">
+                                <button class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="search-category-selected" data-selected-category-id="0">All</button>
+                                <div class="dropdown-menu" id="search-categroy">
+                                    <a class="dropdown-item" data-categoryId="1">Action</a>
+                                    <a class="dropdown-item" data-categoryId="2">Another action</a>
+                                    <a class="dropdown-item" data-categoryId="3">Something else here</a>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control" id="search-text" placeholder="Search for articles">
+                            <div class="input-group-append">
+                                <a class="input-group-text" id="search-button"><i class="fas fa-search"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="~/Account/Login">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <footer class="blockquote-footer text-center mt-5">
+        Powered by Genius Base
+    </footer>
+
+    @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ready(function (e) {
+            $("#search-categroy")
+                .find("a")
+                .click(function (e) {
+                    e.preventDefault();
+                    var categoryId = $(this).data('categoryid');
+                    var categoryDescription = $(this).text();
+                    $("#search-category-selected").html(categoryDescription);
+                    $("#search-category-selected").data('selectedCategoryId', categoryId);
+                });
+        });
+
+        $("#search-button").click(function () {
+            search();
+        });
+
+        function search() {
+            alert(
+                "Category: " + $("#search-category-selected").text() +
+                " \nSearch Text: " +  $("#search-text").val()
+            );
+        }
+
+    </script>
+</body>
+</html>

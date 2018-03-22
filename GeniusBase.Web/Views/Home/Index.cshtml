@@ -1,0 +1,46 @@
+﻿@model GeniusBase.Web.Models.New.DashboardViewModel
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron jumbotron-fluid bg-white border mt-3">
+    <div class="container">
+        <h1 class="display-4">Genius Base</h1>
+        <p class="lead">Learn, share and be productive</p>
+        <ul>
+            <li>Add more articles to benifit you and others</li>
+            <li>If you find something is not right then upate the article</li>
+            <li>Organise the article by adding it to the right category and with relavent tags</li>
+        </ul>
+
+    </div>
+</div>
+
+<div class="card-deck">
+    <div class="card rounded-0">
+        <span class="card-header">Categories</span>
+        <div class="card-body">
+            <ul class="list-group">
+                @foreach (var category in Model.Categories)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        @category.CategoryName
+                        <span class="badge badge-pill badge-info">@category.CategoryArticleCount</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="card rounded-0">
+        <span class="card-header">Tags</span>
+        <div class="card-body">
+            @foreach (var tag in Model.Tags)
+            {
+                <button type="button" class="btn btn-sm btn-outline-info">
+                    @tag.TagName <span class="badge badge-pill badge-info">@tag.TagArticleCount</span>
+                </button>
+            }
+        </div>
+    </div>
+</div>
