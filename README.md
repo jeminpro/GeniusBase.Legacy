@@ -1,0 +1,2 @@
+# GeniusBase
+Easy wiki
