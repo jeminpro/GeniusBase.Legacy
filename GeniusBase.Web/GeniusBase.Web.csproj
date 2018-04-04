@@ -1273,6 +1273,7 @@
     <Content Include="BackupArchives\index.html" />
     <Content Include="Global.asax" />
     <Content Include="Install\default_GeniusBase.sql" />
+    <Content Include="Install\FullDatabase.sql" />
     <Content Include="Install\update-version-0.45-to-0.5.sql" />
     <Content Include="Install\update-version-0.5-to-0.6.sql" />
     <Content Include="logs\readme.txt" />
