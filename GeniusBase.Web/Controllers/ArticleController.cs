@@ -1,5 +1,10 @@
 ﻿using GeniusBase.Dal;
+using GeniusBase.Dal.Repository;
+using GeniusBase.Web.Business.Articles;
 using GeniusBase.Web.Models.New;
+using NLog;
+using NLog.Fluent;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -7,6 +12,10 @@ namespace GeniusBase.Web.Controllers
 {
     public class ArticleController : Controller
     {
+        public IArticleRepository ArticleRepository { get; set; }
+        public IArticleFactory ArticleFactory { get; set; }
+        protected Logger Log = LogManager.GetCurrentClassLogger();
+
         public ActionResult Show(string id)
         {
             using (var db = new GeniusBaseContext())
@@ -32,6 +41,20 @@ namespace GeniusBase.Web.Controllers
                 };
 
                 return View(articleViewModel);                
+            }
+        }
+
+
+        public ActionResult Edit(int id)
+        {
+            try
+            {
+                return View("Create", ArticleFactory.CreateArticleViewModel(ArticleRepository.Get(id)));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return RedirectToAction("Index", "Error");
             }
         }
     }
